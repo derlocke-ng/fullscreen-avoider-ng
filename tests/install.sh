@@ -21,11 +21,22 @@ mkdir -p "$WORK/bin"
 for c in bash glib-compile-schemas gsettings dconf cp rm mkdir cat sed grep printf dirname; do
     p="$(command -v "$c" 2>/dev/null)" && ln -sf "$p" "$WORK/bin/$c"
 done
-run() { env -i HOME="$H" PATH="$WORK/bin" GSETTINGS_BACKEND=keyfile KIWI_GUI="${GUI:-1}" \
-            XDG_CONFIG_HOME="$H/.config" bash "$ROOT/install.sh" "$@"; }
-enabled() { env -i HOME="$H" XDG_CONFIG_HOME="$H/.config" GSETTINGS_BACKEND=keyfile \
+# GNOME Shell's own schema, as far as the installer uses it, so the test also
+# runs where GNOME Shell is not installed (CI)
+S="$WORK/schemas"; mkdir -p "$S"
+cat > "$S/org.gnome.shell.gschema.xml" <<'EOF'
+<schemalist>
+  <schema id="org.gnome.shell" path="/org/gnome/shell/">
+    <key name="enabled-extensions" type="as"><default>[]</default></key>
+  </schema>
+</schemalist>
+EOF
+glib-compile-schemas "$S"
+run() { env -i HOME="$H" PATH="$WORK/bin" GSETTINGS_BACKEND=keyfile GSETTINGS_SCHEMA_DIR="$S" \
+            KIWI_GUI="${GUI:-1}" XDG_CONFIG_HOME="$H/.config" bash "$ROOT/install.sh" "$@"; }
+enabled() { env -i HOME="$H" XDG_CONFIG_HOME="$H/.config" GSETTINGS_BACKEND=keyfile GSETTINGS_SCHEMA_DIR="$S" \
                 gsettings get org.gnome.shell enabled-extensions; }
-setenabled() { env -i HOME="$H" XDG_CONFIG_HOME="$H/.config" GSETTINGS_BACKEND=keyfile \
+setenabled() { env -i HOME="$H" XDG_CONFIG_HOME="$H/.config" GSETTINGS_BACKEND=keyfile GSETTINGS_SCHEMA_DIR="$S" \
                    gsettings set org.gnome.shell enabled-extensions "$1"; }
 
 setenabled "['other@example.com']"
