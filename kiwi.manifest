@@ -1,0 +1,26 @@
+# kiwi.manifest — see https://github.com/derlocke-ng/kiwi-updater
+NAME=fullscreen-avoider-ng
+DESCRIPTION=GNOME Shell extension: moves the top panel, hot corner and notifications to another monitor of your choice while the primary monitor shows a fullscreen window
+VERSION=1.0.0
+AUTHOR=derlocke-ng
+HOMEPAGE=https://github.com/derlocke-ng/fullscreen-avoider-ng
+LICENSE=GPL-3.0-or-later
+
+COMPONENTS=gnome-extension
+CATEGORY=Desktop
+TAGS=gnome extension fullscreen panel multi-monitor monitors games notifications hot-corner
+# the kiwi-icons monitor glyph (kiwi_icon.py --glyph monitor)
+ICON=data/fullscreen-avoider-ng.svg
+ABOUT=README.md
+
+SCOPES=user
+
+# compiles the extension's settings schema
+DEPENDS=glib-compile-schemas
+PACKAGES_DNF=glib2
+PACKAGES_APT=libglib2.0-bin
+PACKAGES_PACMAN=glib2
+PACKAGES_ZYPPER=glib2-tools
+PACKAGES_APK=glib-dev
+
+INSTALLER=install.sh

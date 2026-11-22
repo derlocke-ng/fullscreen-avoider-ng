@@ -1,2 +1,6 @@
-build
-src/schemas/*.compiled
+build/
+src/schemas/gschemas.compiled
+
+# Local tooling settings, not for publishing
+.claude/*
+!.claude/skills/

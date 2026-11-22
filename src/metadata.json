@@ -1,10 +1,10 @@
 {
-	"extension-id": "fullscreen-avoider",
-	"uuid": "fullscreen-avoider@noobsai.github.com",
-	"name": "Fullscreen Avoider",
- 	"gettext-domain": "gnome-shell-extensions",
-	"settings-schema": "org.gnome.shell.extensions.fullscreen-avoider",
-	"description": "Moves the top panel to the secondary monitor if the primary is in fullscreen",
-	"url": "https://github.com/Noobsai/fullscreen-avoider",
-	"shell-version": ["45", "46", "47", "48", "49", "50"]
+    "uuid": "fullscreen-avoider-ng@kiwi-network.eu",
+    "name": "Fullscreen Avoider NG",
+    "description": "Moves the top panel, the hot corner and notifications to another monitor while the primary monitor shows a fullscreen window, and back when it ends. You choose which monitor gets them, or let it take the first free one.\n\nA fork of Fullscreen Avoider by Noobsai.",
+    "settings-schema": "org.gnome.shell.extensions.fullscreen-avoider-ng",
+    "gettext-domain": "fullscreen-avoider-ng@kiwi-network.eu",
+    "url": "https://github.com/derlocke-ng/fullscreen-avoider-ng",
+    "version-name": "1.0.0",
+    "shell-version": ["45", "46", "47", "48", "49", "50", "51"]
 }
