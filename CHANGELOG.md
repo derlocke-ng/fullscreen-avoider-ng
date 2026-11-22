@@ -3,7 +3,7 @@
 Releases of Fullscreen Avoider NG. The newest is on top; its heading is the
 version in kiwi.manifest and metadata.json (`version-name`).
 
-## 1.0.1 — unreleased
+## 1.0.1 — 2026-11-22
 
 - **A fitting icon.** kiwi showed the kiwi-icons "monitor" glyph, which is a
   heartbeat line. It is now the kiwi-os glyph in graphite. The extension
