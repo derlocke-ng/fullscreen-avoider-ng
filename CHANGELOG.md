@@ -3,7 +3,7 @@
 Releases of Fullscreen Avoider NG. The newest is on top; its heading is the
 version in kiwi.manifest and metadata.json (`version-name`).
 
-## 1.0.0 — unreleased
+## 1.0.0 — 2026-11-22
 
 The first release of the fork of Fullscreen Avoider by Noobsai (its v13).
 
