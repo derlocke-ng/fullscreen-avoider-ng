@@ -63,6 +63,17 @@ When a new GNOME Shell comes out: check its porting guide on gjs.guide, add
 the version to `shell-version` in `metadata.json`, add the Fedora release to
 the CI matrix, and upload a new zip.
 
+## The icon
+
+`data/fullscreen-avoider-ng.svg` is the icon kiwi shows: the kiwi-os glyph
+of [kiwi-icons](https://github.com/derlocke-ng/kiwi-icons) in the graphite
+colourway and the classic style, drawn with its `kiwi_icon.py`:
+
+```bash
+python3 kiwi_icon.py --glyph os --colorway graphite --style classic \
+  --title "Fullscreen Avoider NG" -o data/fullscreen-avoider-ng.svg
+```
+
 ## Release
 
 1. Raise the version in `kiwi.manifest` (`VERSION`) and `src/metadata.json`
