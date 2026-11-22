@@ -1,26 +1,26 @@
-#=============================================================================
-UUID=fullscreen-avoider@noobsai.github.com
-SRCDIR=src
+# Fullscreen Avoider NG — for working on it from a checkout. kiwi uses
+# install.sh; extensions.gnome.org gets the zip from `make pack`.
+UUID=fullscreen-avoider-ng@kiwi-network.eu
+SCHEMA=schemas/org.gnome.shell.extensions.fullscreen-avoider-ng.gschema.xml
 BUILDDIR=build
-EXTENSIONDIR=~/.local/share/gnome-shell/extensions
-#=============================================================================
-clean:
-	rm -rf $(BUILDDIR)
 
-build: clean
+.PHONY: pack install uninstall test clean
+
+# the zip to upload to extensions.gnome.org: build/$(UUID).shell-extension.zip
+pack:
 	mkdir -p $(BUILDDIR)
-	cp -r $(SRCDIR) $(BUILDDIR)/$(UUID)
+	gnome-extensions pack src --force --out-dir=$(BUILDDIR) --schema=$(SCHEMA)
 
-zip: build
-	cd $(BUILDDIR)/$(UUID) && zip -r $(UUID).zip * && mv $(UUID).zip ../
-
-install: uninstall build
-	mkdir -p $(EXTENSIONDIR)/$(UUID)
-	cp -r $(BUILDDIR)/$(UUID) $(EXTENSIONDIR)
+install:
+	./install.sh install
 
 uninstall:
-	rm -rf $(EXTENSIONDIR)/$(UUID)
+	./install.sh uninstall
 
-debug_install: uninstall
-	ln -s "$(realpath ./)/$(SRCDIR)" $(UUID)
-	mv $(UUID) $(EXTENSIONDIR)
+test:
+	bash tests/check-version.sh
+	bash tests/lint.sh
+	bash tests/install.sh
+
+clean:
+	rm -rf $(BUILDDIR)

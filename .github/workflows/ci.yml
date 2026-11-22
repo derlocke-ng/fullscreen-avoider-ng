@@ -1,0 +1,35 @@
+name: ci
+on: [push, pull_request]
+
+jobs:
+  checks:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4.4.0
+      - name: tools
+        run: sudo apt-get update -q && sudo apt-get install -y -q libglib2.0-bin shellcheck
+      - name: release gate — the version agrees everywhere, scripts executable in git
+        run: bash tests/check-version.sh
+      - name: what extensions.gnome.org's review checks (metadata, schema, imports)
+        run: bash tests/lint.sh
+      - name: shellcheck
+        run: shellcheck -S warning install.sh tests/*.sh
+      - name: install, update and uninstall in a throwaway HOME
+        run: bash tests/install.sh
+      - name: docs follow the kiwi-docs guide
+        run: python3 .claude/skills/kiwi-docs/scripts/check-docs.py .
+
+  # the extension in a real, headless GNOME Shell with three monitors
+  shell:
+    strategy:
+      fail-fast: false
+      matrix:
+        fedora: ["43", "44", "45"]   # GNOME Shell 49, 50, 51
+    runs-on: ubuntu-24.04
+    container: registry.fedoraproject.org/fedora:${{ matrix.fedora }}
+    steps:
+      - name: GNOME Shell and GTK
+        run: dnf -y -q install gnome-shell gtk4 python3-gobject dbus-daemon dbus-tools glib2
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4.4.0
+      - name: tests/shell.sh
+        run: dbus-run-session -- bash tests/shell.sh
